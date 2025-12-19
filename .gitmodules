@@ -1,0 +1,6 @@
+[submodule "db"]
+	path = db
+	url = https://github.com/MetaversalCorp/MSF_Map_Db.git
+[submodule "web"]
+	path = web
+	url = https://github.com/MetaversalCorp/SceneAssembler.git
