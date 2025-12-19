@@ -1,0 +1,26 @@
+{
+   "_comment1": "'MVSF' contains Server Config Information for MVSF",
+   "MVSF": {
+      "_comment1": "If your server is using SSL, rename '_SSL' to 'SSL'",
+      "_SSL": {
+         "key":   "./ssl/server.key",
+         "cert":  "./ssl/server.cert"
+      },
+
+      "_comment2": "Required for internal use.",
+      "IO": {
+         "bGlobalNotify": true
+      },
+
+      "_comment3": "Server Port & Admin Key",
+      "nPort": "<PORT>",
+      "key":   "<MVSADMINKEY>"
+   },
+
+   "SQL": {
+      "type": "MSSQL",
+      "config": {
+         "connectionString": "Driver=SQL Server;Server=<DBHOST>;Database=<DBNAME>;Trusted_Connection=yes;"
+      }
+   }
+}

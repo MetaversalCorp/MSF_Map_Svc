@@ -1,0 +1,24 @@
+{
+   "name": "mvsmapgeneric",
+   "version": "1.0.0",
+   "description": "MV Database Map",
+   "main": "server.js",
+   "scripts": {
+      "start": "node server",
+      "dev": "nodemon server"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/MetaversalCorp/MVS_Map_Generic.git"
+   },
+   "author": "Metaversal Corporation",
+   "license": "Apache-2.0",
+   "dependencies": {
+      "@metaversalcorp/mvsf": "^0.3.0",
+      "@metaversalcorp/mvsql_mysql": "^0.1.0",
+      "mysql2": "^3.6.0"
+   },
+   "devDependencies": {
+      "nodemon": "^2.0.22"
+   }
+}

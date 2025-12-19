@@ -1,0 +1,7 @@
+{
+   "Modules":   [ "RMBase", "RMRoot", "RMCObject", "RMPObject", "RMTObject" ],
+   "aProtocol":  {
+      "REST":     true,
+      "SocketIO": true
+   }
+}
