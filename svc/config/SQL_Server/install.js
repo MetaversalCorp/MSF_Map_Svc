@@ -18,7 +18,7 @@
 
 const fs            = require ('fs');
 const path          = require ('path');
-const mysql         = require ('mysql2/promise');
+const sql           = require ('mssql/msnodesqlv8');
 
 const Settings      = require ('./settings.json');
 
@@ -30,7 +30,7 @@ class MVSF_Map_Install
 {
    constructor ()
    {
-      this.#ReadFromEnv (Settings.SQL.config, [ "host", "port", "user", "password", "database" ]);
+      this.#ReadFromEnv (Settings.SQL.config, [ "connectionString" ]);
    }
 
    async Run ()
@@ -75,14 +75,14 @@ class MVSF_Map_Install
       let pConn;
       
       if (bCreate)
-         delete pConfig.database; // Remove database from config to connect without it
+         pConfig.connectionString = pConfig.connectionString.replace (/Database=[^;]*;/i, "");  // Remove database from config to connect without it
 
       console.log ('Installing (' + sFilename + ')...');
      
       try 
       {
          // Create connection
-         pConn = await mysql.createConnection (pConfig);
+         pConn = await sql.connect (pConfig.connectionString);
 
          // Read SQL file asynchronously
          const sSQLContent = fs.readFileSync (sSQLFile, 'utf8');
@@ -110,21 +110,16 @@ class MVSF_Map_Install
 
             for (j=0; j<a.length; j++)
                if (a[j].trim () != '')       // optional
-                  await pConn.query (a[j]);
+                  await pConn.request ().query (a[j]);
          }
+
+         await sql.close ();
 
          console.log ('Successfully installed (' + sFilename + ')');      
       } 
       catch (err) 
       {
          console.error ('Error executing SQL:', err.message);
-      } 
-      finally 
-      {
-         if (pConn) 
-         {
-            await pConn.end ();
-         }
       }
    }
 
@@ -133,16 +128,16 @@ class MVSF_Map_Install
       const pConfig = { ...Settings.SQL.config };
       let pConn;
       let bResult = false;
-      let sDB = pConfig.database;
+      let match = pConfig.connectionString.match (/database=([^;]+)/i);
 
-      delete pConfig.database; // Remove database from config to connect without it
+      pConfig.connectionString = pConfig.connectionString.replace (/Database=[^;]*;/i, "");  // Remove database from config to connect without it
       try 
       {
          // Create connection
-         pConn = await mysql.createConnection (pConfig);
+         pConn = await sql.connect (pConfig.connectionString);
 
          // Check if database exists
-         const [aRows] = await pConn.execute (
+         const [aRows] = await pConn.request ().query (
             `SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?`,
             [sDB]
          );
@@ -151,19 +146,14 @@ class MVSF_Map_Install
          {
             bResult = true;
          }
+
+         await sql.close ();
       } 
       catch (err) 
       {
          console.error ('Error executing SQL:', err.message);
       } 
-      finally 
-      {
-         if (pConn) 
-         {
-            await pConn.end ();
-         }
-      }
-
+      
       return bResult;
    }
 }

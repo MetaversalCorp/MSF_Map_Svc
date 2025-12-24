@@ -20,7 +20,7 @@
    "SQL": {
       "type": "MSSQL",
       "config": {
-         "connectionString": "Driver=SQL Server;Server=<DBHOST>;Database=<DBNAME>;Trusted_Connection=yes;"
+         "connectionString": "<CONNECTSTRING>"
       }
    }
 }
