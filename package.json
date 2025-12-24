@@ -1,0 +1,17 @@
+{
+   "name": "@metaversalcorp/msf_map_svc",
+   "version": "1.0.0",
+   "description": "Metaverse spatial fabric map service",
+   "scripts": {
+      "build:win:mssql": "npm run build:win:base && npm run build:win:web && copy .\\svc\\config\\SQL_Server\\*.* dist\\ && cd db\\SQL_Server\\_Create\\ && .\\Create.bat && copy ..\\_Distrib\\MSF_Map.sql ..\\..\\..\\dist\\",
+      "build:win:mysql": "npm run build:win:base && npm run build:win:web && copy .\\svc\\config\\MySQL\\*.* dist\\ && cd db\\MySQL\\_Create\\ && .\\Create.bat && copy ..\\_Distrib\\MSF_Map.sql ..\\..\\..\\dist\\",
+      "build:win:web":  "mkdirp dist\\web && xcopy .\\web\\admin dist\\web\\admin /E /I /Y && xcopy .\\web\\public dist\\web\\public /E /I /Y",
+      "build:win:base": "mkdirp dist\\Handlers && copy .\\svc\\handler.json dist\\ && copy .\\svc\\utils.js dist\\ && copy .\\svc\\Handlers\\*.js dist\\Handlers"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "Apache-2.0",
+   "dependencies": {
+      "mkdirp": "^3.0.1"
+   }
+}
