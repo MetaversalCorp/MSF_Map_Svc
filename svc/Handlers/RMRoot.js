@@ -69,7 +69,7 @@ class HndlrRMRoot extends MVHANDLER
                SqlData: {
                   sProc: 'set_RMRoot_RMCObject_Close',
                   aData: [ 'twRMRootIx', 
-                           'twRMCObjectIx', 'bDeleteAll' 
+                           'twRMCObjectIx_Close', 'bDeleteAll' 
                   ],
                   Param: 1
                }
@@ -95,7 +95,7 @@ class HndlrRMRoot extends MVHANDLER
             'RMRoot:rmpobject_close': {
                SqlData: {
                   sProc: 'set_RMRoot_RMPObject_Close',
-                  aData: [ 'twRMRootIx', 'twRMPObjectIx', 'bDeleteAll' ],
+                  aData: [ 'twRMRootIx', 'twRMPObjectIx_Close', 'bDeleteAll' ],
                   Param: 1
                }
             },
@@ -118,7 +118,7 @@ class HndlrRMRoot extends MVHANDLER
             'RMRoot:rmtobject_close': {
                SqlData: {
                   sProc: 'set_RMRoot_RMTObject_Close',
-                  aData: [ 'twRMRootIx', 'twRMTObjectIx', 'bDeleteAll' ],
+                  aData: [ 'twRMRootIx', 'twRMTObjectIx_Close', 'bDeleteAll' ],
                   Param: 1
                }
             },

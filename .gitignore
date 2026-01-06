@@ -7,6 +7,8 @@ package-lock.json
 
 .vs/
 dist/
+dist_mssql/
+dist_mysql/
 node_modules/
 
 *.vcxproj.user

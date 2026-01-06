@@ -1,7 +1,7 @@
 {
    "_comment1": "'MVSF' contains Server Config Information for MVSF",
    "MVSF": {
-      "_comment1": "If your server is using SSL, rename '_SSL' to 'SSL'",
+      "_comment1": "SSL is required, however if you want to just test it locally, rename 'SSL' to '_SSL' so it runs without using SSL",
       "SSL": {
          "key":   "./ssl/server.key",
          "cert":  "./ssl/server.cert"
@@ -23,14 +23,9 @@
       "_comment0": "Keys under Install, will only be used when installing your DB",
       "_comment1": "db_name - Name of the Database you wish to create",
       "_comment3": "login_name - Specifies the name of the login to grant execute rights.",
-      "_comment2": "nLoginType = 0 -> Use existing Login, 1 -> Create Windows Login, 2 -> Create SQL Login",
-      "_comment4": "password - Used for nLoginType of SQL Login. (i.e. nLoginType = 2)",
       "install": {
          "db_name":           "",
-         "login_name":        "",
-
-         "nLoginType":        0,
-         "password":          ""
+         "login_name":        ""
       },
 
       "config": {

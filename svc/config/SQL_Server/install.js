@@ -31,7 +31,7 @@ class MVSF_Map_Install
    constructor ()
    {
       this.#ReadFromEnv (Settings.SQL.config, [ "connectionString" ]);
-      this.#ReadFromEnv (Settings.SQL.install, [ "db_name", "login_name", "nLoginType", "password" ]);
+      this.#ReadFromEnv (Settings.SQL.install, [ "db_name", "login_name" ]);
    }
 
    async Run ()
@@ -44,18 +44,8 @@ class MVSF_Map_Install
          
 //         this.#ProcessFabricConfig ();
 
-         console.log ('Creating SQL Login...');
-         if (Settings.SQL.install.nLoginType == 2)
-            bResult = await this.#ExecSQL (null, true, [], "CREATE LOGIN " + Settings.SQL.install.login_name + " WITH PASSWORD = '" + Settings.SQL.install.password + "'");
-         else if (Settings.SQL.install.nLoginType == 1)
-            bResult = await this.#ExecSQL (null, true, [], "CREATE LOGIN " + Settings.SQL.install.login_name + " FROM WINDOWS");
-         else bResult = true;
-
-         if (bResult)
-         {
-            console.log ('Creating Database...');
-            bResult = await this.#ExecSQL ('MSF_Map.sql', true, [['[{MSF_Map}]', Settings.SQL.install.db_name], ['[{Login_Name}]', Settings.SQL.install.login_name]]);
-         }
+         console.log ('Creating Database...');
+         bResult = await this.#ExecSQL ('MSF_Map.sql', true, [['[{MSF_Map}]', Settings.SQL.install.db_name], ['{Login_Name}', Settings.SQL.install.login_name]]);
 
          if (bResult)
             console.log ('Installation SUCCESS!!');
