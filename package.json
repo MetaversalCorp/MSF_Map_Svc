@@ -11,7 +11,7 @@
       "build:linux:mysql": "npm run build:linux:base && npm run build:linux:web && cp svc/config/MySQL/* dist/ && cd db/MySQL/_Create && chmod +x ./Create.sh && ./Create.sh && cp ../_Distrib/MSF_Map.sql ../../../dist/",
       "build:linux:web": "mkdir -p dist/web/admin dist/web/public && cp -r web/admin/* dist/web/admin/ && cp -r web/public/* dist/web/public/",
       "build:linux:base": "mkdir -p dist/Handlers && mkdir -p dist/SSL && cp svc/handler.json dist/ && cp svc/utils.js dist/ && cp svc/Handlers/*.js dist/Handlers/",
-      "build:railway": "npm run build:linux:base && npm run build:linux:web && cp svc/config/Railway/* dist/ && cd db/Railway/_Create && chmod +x ./Create.sh && ./Create.sh && cp ../_Distrib/MSF_Map.sql ../../../dist/"
+      "build:railway": "npm run build:linux:base && npm run build:linux:web && cp svc/config/Railway/* dist/ && cd db/MySQL/_Create && chmod +x ./Create.sh && ./Create.sh && cp ../_Distrib/MSF_Map.sql ../../../dist/"
    },
    "keywords": [],
    "author": "",
