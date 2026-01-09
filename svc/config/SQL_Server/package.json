@@ -6,7 +6,8 @@
    "scripts": {
       "start": "node server",
       "dev": "nodemon server",
-      "install:svc": "node install.js"
+      "install:svc":    "node install.js",
+      "install:sample": "node sample.js"
    },
    "repository": {
       "type": "git",

@@ -26,7 +26,7 @@ const Settings      = require ('./settings.json');
 **                                                     Main                                                                   **
 *******************************************************************************************************************************/
 
-class MVSF_Map_Install
+class MVSF_Map_Sample
 {
    constructor ()
    {
@@ -34,16 +34,32 @@ class MVSF_Map_Install
       this.#ReadFromEnv (Settings.SQL.install, [ "db_name", "login_name", "pathname" ]);
    }
 
+   Install ()
+   {
+      const sSrcPath = path.join (__dirname, '..', 'sample');
+      const sDstPath = path.join (__dirname, 'web');
+
+      fs.cp (sSrcPath, sDstPath, { recursive: true }, (err) => {
+         if (err)
+            console.error ('Error copying folder:', err);
+         else
+         {
+            console.log ('Sample Files copied');
+            this.Run ();
+         }
+      });
+   }
+
    async Run ()
    {
-      console.log ('Installion Starting...');
+      console.log ('Sample Install...');
          
-      let bResult = await this.#ExecSQL ('MSF_Map.sql', true, [['[{MSF_Map}]', Settings.SQL.install.db_name], ['{Login_Name}', Settings.SQL.install.login_name], ['[{Pathname}]', Settings.SQL.install.pathname]]);
+      let bResult = await this.#ExecSQL ([['[{MSF_Map}]', Settings.SQL.install.db_name], ['{Login_Name}', Settings.SQL.install.login_name], ['{Pathname}', Settings.SQL.install.pathname]]);
 
       if (bResult)
-         console.log ('Installation SUCCESS!!');
+         console.log ('Sample SUCCESS!!');
       else
-         console.log ('Installation FAILURE!!');
+         console.log ('Sample FAILURE!!');
    }
 
    #GetToken (sToken)
@@ -76,53 +92,45 @@ class MVSF_Map_Install
       return sToken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
    }
 
-   async #ExecSQL (sFilename, bCreate, asToken, sTSQL)
+   async #ExecSQL (asToken)
    {
       let bResult = false;
       const pConfig = { ...Settings.SQL.config };
       let aRegex = [];
       
-      if (bCreate)
-         pConfig.connectionString = pConfig.connectionString.replace (/Database=[^;]*;/i, "");  // Remove database from config to connect without it
-
-      console.log ('Starting (' + sFilename + ')...');
+      console.log ('Sample STARTING ...');
      
       try 
       {
-         if (sFilename)
-         {
-            const sSQLFile = path.join (__dirname, sFilename);
-            sTSQL = fs.readFileSync (sSQLFile, 'utf8');
-         }
-
          for (let i=0; i < asToken.length; i++)
          {
             aRegex.push (new RegExp (this.#EscapeRegExp (asToken[i][0]), "g"));
          }            
 
-         const statements = sTSQL.split(/^\s*GO\s*$/im);
-
          // Create connection
          await sql.connect (pConfig);
 
-         for (let stmt of statements)
-         {
-            if (stmt.trim ())
-            {
-               for (let i=0; i < aRegex.length; i++)
-               {
-                  stmt = stmt.replace (aRegex[i], asToken[i][1]);
-               }
+         let stmt = "DECLARE @nResult INT; EXEC @nResult = dbo.set_RMRoot_RMPObject_Open '0.0.0.0', 1, 1, 'My First Scene', 1, 0, 1, 0, 1, 0, '', '', 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 150, 150, 150; SELECT @nResult AS nResult"; 
 
-               await sql.query (stmt);
+         let results = await sql.query (stmt);
+
+         if (results.recordsets[results.recordsets.length - 1][0].nResult == 0)
+         {
+            stmt = "DECLARE @nResult INT; EXEC @nResult = dbo.set_RMPObject_RMPObject_Open '0.0.0.0', 1, " + results.recordsets[0][0].twRMPObjectIx + ", 'Hello World!', 1, 0, 1, 0, 1, 0, '', '/objects/capsule.glb', 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 134.65382385253906, 13.596150933846705, 129.60743890149325; SELECT @nResult AS nResult";
+
+            results = await sql.query (stmt);
+
+            if (results.recordsets[results.recordsets.length - 1][0].nResult == 0)
+            {
+               bResult = true;
             }
+            else
+               console.log ('Sample FAILED to create object');
          }
+         else
+            console.log ('Sample FAILED to create scene');
 
          await sql.close ();
-
-         console.log ('Completed (' + sFilename + ')');
-
-         bResult = true;
       } 
       catch (err) 
       {
@@ -133,5 +141,5 @@ class MVSF_Map_Install
    }
 }
 
-const g_pInstall = new MVSF_Map_Install ();
-g_pInstall.Run ();
+const g_pSample = new MVSF_Map_Sample ();
+g_pSample.Install ();

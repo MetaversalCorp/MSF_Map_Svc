@@ -94,7 +94,7 @@ class MVSF_MapBase
          this.ReadFromEnv (this.#pSettings.MVSF, [ "nPort", "key" ]);
 
          this.#pServer = new MVSF (this.#pSettings.MVSF, require ('./handler.json'), __dirname, new AuthSimple (this.#pSettings), 'application/json');
-         const pApp = this.#pServer.LoadHtmlSite (__dirname, [ './web/admin', './web/public']);
+         const pApp = this.#pServer.LoadHtmlSite (__dirname, [ './web' ]);
          pApp.get ('/objects.json', (req, res) => {
             let data = [];
             

@@ -26,7 +26,7 @@ const Settings      = require ('./settings.json');
 **                                                     Main                                                                   **
 *******************************************************************************************************************************/
 
-class MVSF_Map_Install
+class MVSF_Map_Sample
 {
    constructor ()
    {
@@ -34,28 +34,10 @@ class MVSF_Map_Install
       this.#ReadFromEnv (Settings.MVSF,   [ "nPort", "key", "sCompanyId" ]);
    }
 
-   async Run ()
-   {
-      let bResult = await this.#IsDBInstalled ();
-
-      if (bResult == false)
-      {
-         console.log ('Starting Installation...');
-         
-         this.#ProcessFabricConfig ();
-
-         bResult = await this.#ExecSQL ('MSF_Map.sql', true, [['[{MSF_Map}]', Settings.SQL.config.database]] );
-
-         if (bResult)
-            console.log ('Installation successfully completed...');
-      }
-      else console.log ('DB Exists aborting installation...');
-   }
-
    Install ()
    {
-      const sSrcPath = path.join (__dirname, '..', 'objects');
-      const sDstPath = path.join (__dirname, 'web/objects');
+      const sSrcPath = path.join (__dirname, '..', 'sample');
+      const sDstPath = path.join (__dirname, 'web');
 
       fs.cp (sSrcPath, sDstPath, { recursive: true }, (err) => {
          if (err)
@@ -68,26 +50,16 @@ class MVSF_Map_Install
       });
    }
 
-   #ProcessFabricConfig ()
+   async Run ()
    {
-      const sFabricPath = path.join (__dirname, 'web', 'public', 'fabric');
+      console.log ('Sample Install...');
+      
+      let bResult = await this.#ExecSQL ('sample.sql', true, [['[{MSF_Map}]', Settings.SQL.config.database]] );
 
-      try
-      {
-         let sContent = fs.readFileSync (path.join (sFabricPath, 'sample.msf'), 'utf8');
-
-         // Replace all occurrences of <PUBLIC_DOMAIN> with the actual environment variable
-         // Check for PUBLIC_DOMAIN first, fallback to RAILWAY_PUBLIC_DOMAIN for Railway compatibility
-         const sPublicDomain = process.env.PUBLIC_DOMAIN || process.env.RAILWAY_PUBLIC_DOMAIN || '';
-         sContent = sContent.replace (/<PUBLIC_DOMAIN>/g, sPublicDomain);
-         sContent = sContent.replace (/<MY_COMPANY_ID>/g, Settings.MVSF.sCompanyId);
-
-         fs.writeFileSync (path.join (sFabricPath, 'fabric.msf'), sContent, 'utf8');
-      }
-      catch (err)
-      {
-         console.log ('Error processing sample.msf: ', err);
-      }
+      if (bResult)
+         console.log ('Sample SUCCESS!!');
+      else
+         console.log ('Sample FAILURE!!');
    }
 
    #GetToken (sToken)
@@ -226,5 +198,5 @@ class MVSF_Map_Install
    }
 }
 
-const g_pInstall = new MVSF_Map_Install ();
-g_pInstall.Run ();
+const g_pSample = new MVSF_Map_Sample ();
+g_pSample.Install ();
