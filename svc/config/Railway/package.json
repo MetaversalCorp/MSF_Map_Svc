@@ -1,12 +1,13 @@
 {
    "name": "msfmapsvc",
    "version": "1.0.0",
-   "description": "MV Database Map",
+   "description": "MSF Map Service",
    "main": "server.js",
    "scripts": {
       "start": "node server",
       "dev": "nodemon server",
-      "install:svc": "node install.js"
+      "install:svc":    "node install.js",
+      "install:sample": "node sample.js"
    },
    "repository": {
       "type": "git",
