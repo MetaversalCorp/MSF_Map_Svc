@@ -84,7 +84,7 @@ class MVSF_MapBase
 
       this.ReadFromEnv (this.#pSettings.SQL.config, asConfigFields);
 
-      this.#sObjectPath = path.join (__dirname, './web/public/objects');
+      this.#sObjectPath = path.join (__dirname, './web/objects');
    }
 
    onSQLReady (pMVSQL, err)
