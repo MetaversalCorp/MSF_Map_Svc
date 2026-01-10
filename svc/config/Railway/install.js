@@ -57,12 +57,11 @@ class MVSF_Map_Install
       else console.log ('DB Exists aborting installation...');
 
       console.log ('Running Config Scripts...');
-      this.Install ('sample', '');
-      this.#ProcessFabricConfig ();
-      this.Install ('objects', 'objects');
+      this.Install ('sample', '', false);
+      this.Install ('objects', 'objects', true);
    }
 
-   Install (sSrcFolder, sDstFolder)
+   Install (sSrcFolder, sDstFolder, bNext)
    {
       const sSrcPath = path.join (__dirname, '..', sSrcFolder);
       const sDstPath = path.join (__dirname, 'web/' + sDstFolder);
@@ -73,7 +72,12 @@ class MVSF_Map_Install
             if (err)
                console.error ('Error copying folder:', err);
             else
+            {
                console.log ('Folder: (' + sSrcFolder + ') created');
+
+               if (bNext)
+                  this.#ProcessFabricConfig ();
+            }
          });
       }
    }
