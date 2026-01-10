@@ -134,7 +134,7 @@ class MVSF_Map_Install
 
    #ProcessFabricConfig ()
    {
-      const sFabricPath = path.join (__dirname, 'web', 'public', 'fabric');
+      const sFabricPath = path.join (__dirname, 'web', 'fabric');
 
       try
       {
