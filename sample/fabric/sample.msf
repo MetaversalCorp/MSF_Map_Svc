@@ -3,9 +3,9 @@
       "namespace": "<MY_COMPANY_ID>/map",
       "service": "MVIO",
       "require": "MVRP_Map",
-      "connect": "secure=true;server=<PUBLIC_DOMAIN>:443;session=RP1",
+      "connect": "secure=true;server=<PUBLIC_DOMAIN>:<EXTERNAL_PORT>;session=RP1",
       "bAuth":   false,
-      "RootUrl": "https://<PUBLIC_DOMAIN>",
+      "RootUrl": "https://<PUBLIC_DOMAIN>:<EXTERNAL_PORT>",
       "Scene":   1
    }
 }
