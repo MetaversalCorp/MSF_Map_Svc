@@ -1,6 +1,6 @@
 {
    "name": "msfmapsvc",
-   "version": "1.0.0",
+   "version": "1.1.0",
    "description": "MV Database Map",
    "main": "server.js",
    "scripts": {
