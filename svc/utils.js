@@ -190,11 +190,6 @@ function EventFetch ()
    }
 }
 
-function Test (fn, Result)
-{
-   console.log ('Result: ', Result);
-}
-
 function InitSQL (pSQL, pServer, pInfo)
 {
    g_pMVSQL  = pSQL;
