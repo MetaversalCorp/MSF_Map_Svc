@@ -15,7 +15,13 @@
       "_comment3_1": "key - Admin Key to allow user to modify the Map",
       "_comment3_2": "port - The port the actual server application is listening on",
       "key":  "",
-      "port": ""
+      "port": "",
+
+      "_comment3_3": "CompanyID",
+      "sCompanyId": "",
+
+      "_comment3_4": "Public Hostname:Port (i.e. www.mydomain.com:2000). If you are using the default port, you can omit it (i.e. 443 for SSL)",
+      "host": ""
    },
 
    "SQL": {

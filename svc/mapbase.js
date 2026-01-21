@@ -87,6 +87,26 @@ class MVSF_MapBase
       this.#sObjectPath = path.join (__dirname, './web/objects');
    }
 
+   GenerateMSF (req, res, num1, num2)
+   {
+      res.setHeader ('Content-Type', 'application/json');
+      res.send 
+      (
+         '{\n' +
+         '   "map": {\n' +
+         '      "sRequire":    "MVRP_Map",\n' +
+         '      "sNamespace":  "' + this.#pSettings.MVSF.sCompanyId + '/map",\n' +
+         '      "sService":    "MVIO",\n' +
+         '      "sConnect":    "secure=' + (this.#pSettings.MVSF.SSL ? 'true' : 'false') + ';server=' + this.#pSettings.MVSF.host + ';session=RP1",\n' +
+         '      "bAuth":       false,\n' +
+         '      "sRootUrl":    "http' + (this.#pSettings.MVSF.SSL ? 's' : '') + '://' + this.#pSettings.MVSF.host + '",\n' +
+         '      "wClass":      ' + num1 + ',\n' +
+         '      "twObjectIx":  ' + num2 + '\n' +
+         '   }\n' +
+         '}\n'
+      );
+   }
+
    onSQLReady (pMVSQL, err)
    {
       if (pMVSQL)
@@ -108,8 +128,22 @@ class MVSF_MapBase
             res.setHeader ('Content-Type', 'application/json');
 //            res.setHeader ('Content-Disposition', 'attachment; filename="objects.json"');
 
-            // Send JSON as file
             res.send (JSON.stringify (data, null, 2));
+         });
+         
+         pApp.get ('/fabric/', (req, res) => {
+            this.GenerateMSF (req, res, 73, 1);
+         });
+         
+         pApp.get ('/fabric/:num1/:num2/', (req, res) => {
+            const { num1, num2 } = req.params;
+
+            if (!Number.isInteger (Number (num1)) || !Number.isInteger (Number (num2))) 
+            {
+               return res.status(400).send ('Missing/Invalid MSF Request');
+            }
+
+            this.GenerateMSF (req, res, num1, num2);
          });
          
          this.#pServer.Run ();

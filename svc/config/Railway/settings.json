@@ -17,8 +17,11 @@
       "key":   "<MVSADMINKEY>",
       "port": "<PORT>",
 
-      "_comment4": "CompanyID",
-      "sCompanyId": "<MYCOMPANYID>"
+      "_comment3_3": "CompanyID",
+      "sCompanyId": "<MYCOMPANYID>",
+
+      "_comment3_4": "Public Hostname:Port (i.e. www.mydomain.com:2000). If you are using the default port, you can omit it (i.e. 443 for SSL)",
+      "host": ""
    },
 
    "SQL": {
