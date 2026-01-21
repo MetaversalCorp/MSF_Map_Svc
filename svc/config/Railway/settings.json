@@ -21,7 +21,7 @@
       "sCompanyId": "<MYCOMPANYID>",
 
       "_comment3_4": "Public Hostname:Port (i.e. www.mydomain.com:2000). If you are using the default port, you can omit it (i.e. 443 for SSL)",
-      "host": "<PUBLIC_DOMAIN>"
+      "host": "<RAILWAY_PUBLIC_DOMAIN>"
    },
 
    "SQL": {
