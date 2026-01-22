@@ -31,7 +31,7 @@ class MVSF_Map extends MVSF_MapBase
 
    constructor ()
    {
-      super ([ "host", "port", "user", "password", "database" ], Settings, 443);
+      super ([ "host", "port", "user", "password", "database" ], Settings);
 
       switch (Settings.SQL.type)
       {

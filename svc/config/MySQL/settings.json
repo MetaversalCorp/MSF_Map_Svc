@@ -1,28 +1,39 @@
 {
-   "_comment1": "'MVSF' contains Server Config Information for MVSF",
    "MVSF": {
-      "_comment1": "Specify the location of SSL PEM Files",
-      "SSL": {
-         "key":   "./ssl/server.key",
-         "cert":  "./ssl/server.cert"
-      },
-
-      "_comment2": "Required for internal use.",
       "IO": {
+         "_comment2": "Required for internal use.",
+
          "bGlobalNotify": true
       },
 
-      "_comment3_1": "key - Admin Key to allow user to modify the Map",
-      "_comment3_2": "port - The internal port the actual server application is listening on",
-      "key":  "",
-      "port": "",
-      "bUseSSL": true,
+      "LAN": {
+         "_comment3": "port - The internal port the service is listening on",
 
-      "_comment3_3": "CompanyID",
-      "sCompanyId": "",
+         "port": "",
+         "SSL": {
+            "_comment1_1": "bUseSSL - Boolean value that enable/disables SSL. NOTE: Set to false ONLY if testing using localhost",
+            "_comment1_2": "key - File Location of the SSL private key",
+            "_comment1_3": "cert - File Location of the SSL certificate",
 
-      "_comment3_4": "Public Hostname:Port (i.e. www.mydomain.com:2000). If you are using the default port, you can omit it (i.e. 443 for SSL)",
-      "host": ""
+            "bUseSSL":  true,
+            "key":      "./ssl/server.key",
+            "cert":     "./ssl/server.cert"
+         }
+      },
+
+      "WAN": {
+         "_comment4_1": "host - The public hostname of your server",
+         "_comment4_2": "port - The public port mapped to your service. Frequently this is the same as your LAN port",
+
+         "host": "",
+         "port": ""
+      },
+
+      "_comment5_1": "key - Admin Key to allow user to modify the Map",
+      "_comment5_3": "sCompanyId - Your RP1 CompanyID",
+
+      "key":         "",
+      "sCompanyId":  ""
    },
 
    "SQL": {

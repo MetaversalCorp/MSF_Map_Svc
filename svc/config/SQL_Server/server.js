@@ -31,7 +31,7 @@ class MVSF_Map extends MVSF_MapBase
 
    constructor ()
    {
-      super (['connectionString'], Settings, 0);
+      super (['connectionString'], Settings);
 
       switch (Settings.SQL.type)
       {

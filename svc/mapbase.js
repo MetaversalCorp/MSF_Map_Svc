@@ -77,12 +77,10 @@ class MVSF_MapBase
    #pServer;
    #pSettings;
    #sObjectPath;
-   #nPort;
 
-   constructor (asConfigFields, pSettings, nPort)
+   constructor (asConfigFields, pSettings)
    {
       this.#pSettings = pSettings;
-      this.#nPort     = nPort;
 
       this.ReadFromEnv (this.#pSettings.SQL.config, asConfigFields);
 
@@ -92,9 +90,6 @@ class MVSF_MapBase
    GenerateMSF (req, res, num1, num2)
    {
       res.setHeader ('Content-Type', 'application/json');
-      let sPort = '';
-      if (this.#nPort != 0)
-         sPort = ':' + this.#nPort;
       res.send 
       (
          '{\n' +
@@ -102,9 +97,9 @@ class MVSF_MapBase
          '      "sRequire":    "MVRP_Map",\n' +
          '      "sNamespace":  "' + this.#pSettings.MVSF.sCompanyId + '/map",\n' +
          '      "sService":    "MVIO",\n' +
-         '      "sConnect":    "secure=' + (this.#pSettings.MVSF.bUseSSL ? 'true' : 'false') + ';server=' + this.#pSettings.MVSF.host + sPort + ';session=RP1",\n' +
+         '      "sConnect":    "secure=' + (this.#pSettings.MVSF.SSL.bUseSSL ? 'true' : 'false') + ';server=' + this.#pSettings.MVSF.WAN.host + ';port=' + this.#pSettings.WAN.port + ';session=RP1",\n' +
          '      "bAuth":       false,\n' +
-         '      "sRootUrl":    "http' + (this.#pSettings.MVSF.bUseSSL ? 's' : '') + '://' + this.#pSettings.MVSF.host + '",\n' +
+         '      "sRootUrl":    "http' + (this.#pSettings.MVSF.bUseSSL ? 's' : '') + '://' + this.#pSettings.MVSF.WAN.host + ':' + this.#pSettings.WAN.port + '",\n' +
          '      "wClass":      ' + num1 + ',\n' +
          '      "twObjectIx":  ' + num2 + '\n' +
          '   }\n' +
@@ -116,7 +111,10 @@ class MVSF_MapBase
    {
       if (pMVSQL)
       {
-         this.ReadFromEnv (this.#pSettings.MVSF, [ "port", "key", "sCompanyId", "host" ]);
+         this.ReadFromEnv (this.#pSettings.MVSF, [ "key", "sCompanyId" ]);
+         this.ReadFromEnv (this.#pSettings.MVSF.LAN, [ "port" ]);
+         this.ReadFromEnv (this.#pSettings.MVSF.LAN.SSL, [ "key", "cert" ]);
+         this.ReadFromEnv (this.#pSettings.MVSF.WAN, [ "host", "port" ]);
 
          this.#pServer = new MVSF (this.#pSettings.MVSF, require ('./handler.json'), __dirname, new AuthSimple (this.#pSettings), 'application/json');
          const pApp = this.#pServer.LoadHtmlSite (__dirname, [ './web' ]);
