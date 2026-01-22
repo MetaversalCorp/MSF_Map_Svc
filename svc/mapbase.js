@@ -90,6 +90,11 @@ class MVSF_MapBase
    GenerateMSF (req, res, num1, num2)
    {
       res.setHeader ('Content-Type', 'application/json');
+
+      let sPort_WAN = '';
+
+      if (Number (this.#pSettings.MVSF.WAN.port) != 443)
+         sPort_WAN = ':' + this.#pSettings.MVSF.WAN.port;
       res.send 
       (
          '{\n' +
@@ -99,7 +104,7 @@ class MVSF_MapBase
          '      "sService":    "MVIO",\n' +
          '      "sConnect":    "secure=' + (this.#pSettings.MVSF.LAN.SSL.bUseSSL ? 'true' : 'false') + ';server=' + this.#pSettings.MVSF.WAN.host + ';port=' + this.#pSettings.MVSF.WAN.port + ';session=RP1",\n' +
          '      "bAuth":       false,\n' +
-         '      "sRootUrl":    "http' + (this.#pSettings.MVSF.LAN.SSL.bUseSSL ? 's' : '') + '://' + this.#pSettings.MVSF.WAN.host + ':' + this.#pSettings.MVSF.WAN.port + '",\n' +
+         '      "sRootUrl":    "http' + (this.#pSettings.MVSF.LAN.SSL.bUseSSL ? 's' : '') + '://' + this.#pSettings.MVSF.WAN.host + sPort_WAN + '",\n' +
          '      "wClass":      ' + num1 + ',\n' +
          '      "twObjectIx":  ' + num2 + '\n' +
          '   }\n' +
