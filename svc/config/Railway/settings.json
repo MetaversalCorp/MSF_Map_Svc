@@ -15,7 +15,7 @@
       "_comment3_1": "key - Admin Key to allow user to modify the Map",
       "_comment3_2": "port - The internal port the actual server application is listening on",
       "key":   "<MVSADMINKEY>",
-      "port": "443",
+      "port": "<PORT>",
       "bUseSSL": true,
 
       "_comment3_3": "CompanyID",
