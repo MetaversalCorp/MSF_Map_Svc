@@ -83,9 +83,9 @@ class HndlrRMCObject extends MVHANDLER
                }
             },
 
-            'RMCObject:orbit': {
+            'RMCObject:orbit_spin': {
                SqlData: {
-                  sProc: 'set_RMCObject_Orbit',
+                  sProc: 'set_RMCObject_Orbit_Spin',
                   aData: [ 'twRMCObjectIx',
                            'Orbit_Spin_tmPeriod', 'Orbit_Spin_tmStart', 'Orbit_Spin_dA', 'Orbit_Spin_dB'
                   ],
