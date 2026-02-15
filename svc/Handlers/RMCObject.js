@@ -168,7 +168,8 @@ class HndlrRMCObject extends MVHANDLER
                            'Resource_qwResource', 'Resource_sName', 'Resource_sReference', 
                            'Transform_Position_dX', 'Transform_Position_dY', 'Transform_Position_dZ', 'Transform_Rotation_dX', 'Transform_Rotation_dY', 'Transform_Rotation_dZ', 'Transform_Rotation_dW', 'Transform_Scale_dX', 'Transform_Scale_dY', 'Transform_Scale_dZ',      
                            'Bound_dX', 'Bound_dY', 'Bound_dZ',
-                           'Properties_bLockToGround', 'Properties_bYouth', 'Properties_bAdult', 'Properties_bAvatar'
+                           'Properties_bLockToGround', 'Properties_bYouth', 'Properties_bAdult', 'Properties_bAvatar',
+                           'bCoord', 'dA', 'dB', 'dC'
                   ],
                   Param: 1
                }
