@@ -81,6 +81,7 @@ class MVSF_Map_Install
       let bResult = false;
       const pConfig = { ...Settings.SQL.config };
       let aRegex = [];
+      let sCurrentStmt = '';
       
       if (bCreate)
          pConfig.connectionString = pConfig.connectionString.replace (/Database=[^;]*;/i, "");  // Remove database from config to connect without it
@@ -109,6 +110,7 @@ class MVSF_Map_Install
          {
             if (stmt.trim ())
             {
+               sCurrentStmt = stmt;
                for (let i=0; i < aRegex.length; i++)
                {
                   stmt = stmt.replace (aRegex[i], asToken[i][1]);
@@ -126,7 +128,12 @@ class MVSF_Map_Install
       } 
       catch (err) 
       {
-         console.error ('Error executing SQL:', err.message);
+         console.error ('Error executing SQL:', err);
+         // `err.message` can be an object for `mssql/msnodesqlv8`, which becomes `[object Object]`.
+         if (err && err.message !== undefined)
+            console.error ('Error message field:', err.message);
+         if (typeof sCurrentStmt === 'string' && sCurrentStmt.trim ())
+            console.error ('SQL fragment (first 2000 chars):', sCurrentStmt.slice (0, 2000));
       }
 
       return bResult;

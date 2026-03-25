@@ -42,7 +42,7 @@ class MVSF_Map_Install
             console.log('Installation successfully completed...');
     }
 
-   #GetToken (sToken)
+       #GetToken (sToken)
    {
       const match = sToken.match (/<([^>]+)>/);
       return match ? match[1] : null;
